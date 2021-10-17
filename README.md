@@ -4,3 +4,4 @@ Including:
   - exercises from A Byte Of Python
   - projects from Free Code Camp Kylie Ying youtube tutorials
   - exercises from Coder's Apprentice
+  - socket programming from RealPython, GeeksforGeeks, and the Python 3.10 docs
