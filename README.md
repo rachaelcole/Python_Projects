@@ -8,3 +8,4 @@ Including:
   - network programming projects (Port Scanner, DDoS attack, TCP chatroom) from NeuralNine.com
   - simple web scrapers using regular expressions and BeautifulSoup4
   - exercises and samples from Foundations of Network Programming by John Goerzen, ed. Martin Streicher
+  - exercises from Automate The Boring Stuff With Python, 2nd ed., by Al Sweigart
