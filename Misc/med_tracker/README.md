@@ -37,5 +37,4 @@ ID,DATE, MORN, NOON, NIGHT
 ### Known bugs/errors:
 1. No input validation
 2. Non-alphanum, /, :, and comma (,) characters should not be permitted to be written to the CSV file
-3. when adding >1 entry, entries are written with ""
-4. When adding 1 entry, entries are written with "[]"
+3. When adding a single entry, the "[]" list chars are also written to the csv file
