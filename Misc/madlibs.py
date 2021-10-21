@@ -1,11 +1,11 @@
 #! python3
 # madlibs.py - Take user input and return mad libs
 # e.g.  "{exclamation}! he said {adverb} as he jumped into his convertible {noun} and drove off with
-# his {adjective} wife."
+#       his {adjective} wife."
 # DYNAMIC MAD LIB:
-# Choose mad lib keys from a dict
-# e.g. f'{exclamation}!' he said {adverb}, as he jumped into his convertible {noun1} and drove off into the {noun2} with his {adjective} wife
-# if 'word_type' in 'mad_lib_chosen': get user input for 'word_type' and store that in a variable
+# Choose a random mad lib from a txt file of formatted mad lib strings (no quotation marks)
+# Dynamically choose mad lib keys from the selected file using find() and dicts
+
 import random
 
 # Initialise user input variables
@@ -14,12 +14,13 @@ adverb = ''
 verb = ''
 noun1 = ''
 noun2 = ''
+noun3 = ''
 adjective = ''
 pronoun = ''
 number = 0
 
 
-# Define a function to get the keys of the chosen madlib
+# Define a function to get the keys of the chosen mad lib
 def get_keys(string):
     key_list = list()
     end = 0
@@ -58,21 +59,23 @@ def tell_story(story):
 
 # Main function
 def main():
-    # Store madlibs as a list of strings
-    madlibs = [
-        "'{exclamation}!' he said {adverb}, as he jumped into his convertible {noun1} and drove off into the {noun2} with his {adjective} wife",
-        "Today {pronoun} went to the {noun1} and saw {number} {noun2}s! {pronoun} counted them {adverb}, because {pronoun} is good at {noun1}.",
-        "I love to {verb}, but only when I'm feeling {adjective}. It just isn't the same when {noun1} is going {adverb}. {exclamation}!"
-    ]
-    # Select a madlib from the madlibs list at random:
+    madlibs = list()
+    # Prompt the user for the name of a file that should contain a mad lib format string as text
+    file_name = input("Enter a file (e.g. madlibs.txt): ")
+    # Open the file in read mode
+    madlibs_file = open(file_name, "r")
+    # Read each row of the file and store in the variable madlibs, which is a list of strings
+    madlibs = madlibs_file.readlines()
+    # Select a mad lib from the mad libs list at random:
     print("Selecting a random mad lib...")
     madlib_index = random.randint(0, len(madlibs) - 1)
-    # print("DEBUG:", madlib_index)
     madlib = madlibs[madlib_index]
-    # print("DEBUG:", madlib)
-    print("Madlib chosen! Let's play!\n")
-
+    print("Mad lib chosen! Let's play!\n")
+    # Call the tell_story() func to print the mad lib with the user's words inserted
     tell_story(madlib)
+    # Close the madlibs_file
+    madlibs_file.close()
+    # Prompt user to exit program
     input("Press Enter to end the program.")
 
 
