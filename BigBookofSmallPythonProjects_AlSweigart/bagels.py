@@ -1,4 +1,4 @@
-#! python3
+#!/user/bin/env python3
 # bagels.py - A deductive logic game (based on string comparisons) where the user guesses a number based on clues.
 
 import random
