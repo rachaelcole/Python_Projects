@@ -1,4 +1,4 @@
-#! user/bin/env/python3
+#!/user/bin/env python3
 # deepcave.py - An endless cave-walking animation
 
 import random, sys, time

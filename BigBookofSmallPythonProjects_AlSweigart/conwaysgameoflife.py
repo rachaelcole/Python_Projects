@@ -1,4 +1,4 @@
-#! user/bin/env/python3
+#!/user/bin/env python3
 # conwaysgameoflife.py - Conway's Game of Life cellular automata simulation
 
 import copy

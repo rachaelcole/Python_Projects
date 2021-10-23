@@ -1,4 +1,4 @@
-#! user/bin/env/python3
+#!/user/bin/env python3
 # countdown.py - Shows a countdown timer animation using a seven-segment display
 
 import sys
