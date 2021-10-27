@@ -31,16 +31,6 @@ def translate_by(translation):
         return add(translation, v)
     return new_function
 
-def rotate_z(angle, vector):
-    x,y,z = vector
-    new_x, new_y = rotate2d(angle, (x,y))
-    return new_x, new_y, z
-
-def rotate_z_by(angle):
-    def new_function(v):
-        return rotate_z(angle, v)
-    return new_function
-
 def rotate_x(angle, vector):
     x,y,z = vector
     new_y, new_z = rotate2d(angle, (y,z))
@@ -61,6 +51,16 @@ def rotate_y_by(angle):
         return rotate_y(angle, v)
     return new_function
 
+def rotate_z(angle, vector):
+    x,y,z = vector
+    new_x, new_y = rotate2d(angle, (x,y))
+    return new_x, new_y, z
+
+def rotate_z_by(angle):
+    def new_function(v):
+        return rotate_z(angle, v)
+    return new_function
+    
 def transform_standard_basis(transform):
     return transform((1,0,0)), transform((0,1,0)), transform((0,0,1))
 
