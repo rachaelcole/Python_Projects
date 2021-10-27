@@ -1,27 +1,23 @@
 from math import sqrt, pi, ceil, floor
 import matplotlib
+import matplotlib.patches
 from matplotlib.patches import Polygon
 from matplotlib.collections import PatchCollection
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import xlim, ylim
 
-blue = 'C0'
-black = 'k'
-red = 'C3'
-green = 'C2'
-purple = 'C4'
-orange = 'C2'
-gray = 'gray'
+from colors import *
 
 
-class Points():
+
+class Points2D():
     def __init__(self, *vectors, color=black):
         self.vectors = list(vectors)
         self.color = color
 
 
-class Polygon():
+class Polygon2D():
     def __init__(self, *vertices, color=blue, fill=None, alpha=0.4):
         self.vertices = vertices
         self.color = color
@@ -29,14 +25,14 @@ class Polygon():
         self.alpha = alpha
 
 
-class Arrow():
+class Arrow2D():
     def __init__(self, tip, tail=(0,0), color=red):
         self.tip = tip
         self.tail = tail
         self.color = color
 
 
-class Segment():
+class Segment2D():
     def __init__(self, start_point, end_point, color=blue):
         self.start_point = start_point
         self.end_point = end_point
@@ -44,31 +40,31 @@ class Segment():
 
 
 # Helper function to extract all the vectors from a list of objects:
-def extract_vectors(objects):
+def extract_vectors_2d(objects):
     for object in objects:
-        if type(object) == Polygon:
+        if type(object) == Polygon2D:
             for v in object.vertices:
                 yield v
-        elif type(object) == Points:
+        elif type(object) == Points2D:
             for v in object.vectors:
                 yield v
-        elif type(object) == Arrow:
+        elif type(object) == Arrow2D:
             yield object.tip
             yield object.tail
-        elif type(object) == Segment:
+        elif type(object) == Segment2D:
             yield object.start_point
             yield object.end_point
         else:
             raise TypeError(f'Unrecognised object: {object}')
 
 
-def draw(*objects, origin=True, axes=True, grid=(1,1), nice_aspect_ratio = True, width = 6, save_as=None):
-    all_vectors = list(extract_vectors(objects))
+def draw2d(*objects, origin=True, axes=True, grid=(1,1), nice_aspect_ratio = True, width = 6, save_as=None):
+    all_vectors = list(extract_vectors_2d(objects))
     xs, ys = zip(*all_vectors)
 
     max_x, max_y, min_x, min_y = max(0,*xs), max(0,*ys), min(0, *xs), min(0, *ys)
 
-    # Sizing
+    # Sizing 
     if grid:
         x_padding = max(ceil(0.05*(max_x - min_x)), grid[0])
         y_padding = max(ceil(0.05*(max_y - min_y)), grid[1])
@@ -95,8 +91,9 @@ def draw(*objects, origin=True, axes=True, grid=(1,1), nice_aspect_ratio = True,
         plt.gca().axhline(linewidth=2, color='k')
         plt.gca().axvline(linewidth=2, color='k')
     
-    for object in objects:
-        if type(object) == Polygon:
+    for object in objects:  # Iterate over objects passed in
+
+        if type(object) == Polygon2D:
             for i in range(0, len(object.vertices)):
                 x1, y1 = object.vertices[i]
                 x2, y2 = object.vertices[(i+1)%len(object.vertices)]
@@ -105,11 +102,13 @@ def draw(*objects, origin=True, axes=True, grid=(1,1), nice_aspect_ratio = True,
                 xs = [v[0] for v in object.vertices]
                 ys = [v[1] for v in object.vertices]
                 plt.gca().fill(xs,ys,object.fill,alpha=object.alpha)
-        elif type(object) == Points:
+
+        elif type(object) == Points2D:  # Draw dots for all vectors using matplotlib scatter() function
             xs = [v[0] for v in object.vectors]
             ys = [v[1] for v in object.vectors]
             plt.scatter(xs,ys,color=object.color)
-        elif type(object) == Arrow:
+
+        elif type(object) == Arrow2D:
             tip, tail = object.tip, object.tail
             tip_length = (xlim()[1] - xlim()[0]) / 20
             length = sqrt((tip[1] - tail[1])**2 + (tip[0] - tail[0])**2)
@@ -117,10 +116,12 @@ def draw(*objects, origin=True, axes=True, grid=(1,1), nice_aspect_ratio = True,
             new_y = (tip[1] - tail[1]) * (new_length / length)
             new_x = (tip[0] - tail[0]) * (new_length / length)
             plt.gca().arrow(tail[0], tail[1], new_x, new_y, head_width=tip_length/1.5, head_length=tip_length, fc=object.color, ec=object.color)
-        elif type(object) == Segment:
+        
+        elif type(object) == Segment2D:
             x1, y1 = object.start_point
             x2, y2 = object.end_point
             plt.plot([x1,x2], [y1,y2], color=object.color)
+        
         else:
             raise TypeError(f'Unrecognised object: {object}')
     
