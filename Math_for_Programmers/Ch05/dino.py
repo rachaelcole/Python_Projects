@@ -3,6 +3,9 @@ from vectors import *
 from transforms import *
 from math import *
 from draw3d import *
+from draw_model import *
+from draw_teapot import *
+from teapot import load_triangles
 
 # Helper function to get the segments of the dinosaur polygon in 3D:
 def polygon_segments_3d(points, color='blue'):
@@ -45,8 +48,21 @@ draw3d(
 
 translated_2d = [(x,y) for (x,y,z) in translated]
 
-draw(
+"""draw(
  
     Points(*translated_2d, color='C3'),
     Polygon(*translated_2d, color='C3')
 )
+"""
+# Rotate and translate
+rotate_and_translate = ((0, -1, 3), (1, 0, 1), (0, 0, 1))
+rotated_translated_dino = [
+    multiply_matrix_vector(rotate_and_translate, v)
+    for v in dino_vectors_3d
+]
+
+draw3d(
+    Points3D(*rotated_translated_dino, color='C3'),
+    Polygon3D(*rotated_translated_dino, color='C3')
+)
+
