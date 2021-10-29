@@ -62,8 +62,8 @@ class PolygonModel():
 # The ship has a fixed triangular shape:
 class Ship(PolygonModel):
     def __init__(self):
-        # TODO: fix bug here, ship displays as one line rather than a triangular polygon
-        super().__init__([(0,5,0), (-0.25,0.25), (-0.25,-0.25)])
+        
+        super().__init__([(0.5,0), (-0.25,0.25), (-0.25,-0.25)])
     
     def laser_segment(self):
         dist = 20 * sqrt(2)  # Use Pythagorean theorem to find longest segment that fits on screen
