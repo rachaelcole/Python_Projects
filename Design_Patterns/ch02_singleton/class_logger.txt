@@ -1,2 +1,0 @@
-[CRITICAL] This is a critical message
-[INFO] This is an info message

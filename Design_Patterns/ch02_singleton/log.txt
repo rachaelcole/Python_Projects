@@ -1,7 +1,0 @@
-save this for later
-logmessage 0
-logmessage 1
-logmessage 2
-logmessage 3
-[ERROR] zero division error
-[ERROR] zero division error
