@@ -2,7 +2,7 @@
 # which is alerted whenever an Observable object that the two classes are connected to undergoes a change. It is
 # a design pattern where an object (the subject) maintains a list of dependents (obserbers) and notifies them of
 # any state changes (usually by calling one of their methods). It is mainly used to implement distributed event
-# handling systems (Gamme, E., Helm, R., Johnson, R., Vlissides, J. Design Patterns: Elements of Reusable Object-
+# handling systems (Gamma, E., Helm, R., Johnson, R., Vlissides, J. Design Patterns: Elements of Reusable Object-
 # Oriented Software, Addison-Wesley, 1994).
 
 # An observer pattern looks like this:
