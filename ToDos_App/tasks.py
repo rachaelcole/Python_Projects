@@ -1,69 +1,79 @@
-# tasks.py - A basic to-do list application built using Python and a SQLite database
-
-# TODO: very very unfinished code !!! 
-        # CONSULT pseudocode.md AND TODO items below to continue
-        # TODO: change ALL_USERNAMES global variable to sqlite3 db (same for Tasks)
-
-import sys
+# tasks.py - A basic to-do list application built using Python and a Peewee Sqlite database
 import datetime
-
-# SET GLOBAL VARIABLES
-
-# Set global categories variable
-CATEGORIES =  ['employment', 'programming', 'reading', 'self_care', 'exercise', 'relaxing', 'socialising',
-               'health', 'chores', 'other']
-# Set global users list variable that holds User objects as list items - TODO: change to sqlite3 db
-ALL_USERNAMES = list()
+from operator import add
+from peewee import *
 
 
-# DECLARE CLASSES
-
-# User class
-class User(object):
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-        self.task_list = []
-        # Add user to global variable on initialisation - TODO: change to sqlite3 db
-        ALL_USERNAMES.append(self.username)
-    
-    def add_task(self, task, category):
-        task_add = Task(task, category)
-        self.task_list.append(task_add)
-            
-    def __repr__(self):
-        return f'User: {self.username}\nTasks: {[x for x in self.task_list]}'
-
-# Task class
-class Task(object):
-    def __init__(self, task, category):
-        self.name = task
-        self.category = category
-        self.completed = False
-        self.date_added = datetime.datetime.now()
+db = SqliteDatabase('tasks.db')
 
 
-# EXECUTE THE PROGRAM
+class Task(Model):
+    task_name = CharField()
+    date_added = TimestampField(default=datetime.datetime.now())
+    completed = BooleanField(default=False)
+    date_completed = DateTimeField(null=True, default=None)
+    category = TextField()
 
-# Main program execution
+    class Meta:
+        database = db
+
+
+def initialise():
+    """ Create the database and the tables if they don't exist """
+    db.connect()
+    db.create_tables([Task], safe=True)
+
+
+def add_task(name, cat):
+    """ Add a task to the tasks table """
+    new_task = Task.create(task_name=name, category=cat,)
+    new_task.save()
+    return new_task
+
+#TODO: def delete_task(task), def delete_all_tasks()
+
+def check_task_completed(task):
+    """ Toggle a task's completed attribute """
+    if task.completed == 0:
+        task.completed = 1
+        task.date_completed = datetime.datetime.now()
+    elif task.completed == 1:
+        task.completed = 0
+        task.date_completed = None
+    task.save()
+    return task
+
+# TODO: check/uncheck ALL tasks
+
+def print_all_tasks():
+    """Print all tasks"""
+    print('Printing all tasks:\n')
+    rows = Task.select()
+    for row in rows:
+        if row.completed == 0:
+            completed_task = 'no'
+        elif row.completed == 1:
+            completed_task = 'yes'
+        print(f'''Task: {row.task_name}
+Date added: {row.date_added}
+Completed? {completed_task}
+Date completed: {row.date_completed}\n''')
+
+#TODO: implement task statistics
+
+
 def main():
-    # Initialise a sample User() for testing
-    sample_user = User('sample_user', 'test_password')
-    # Add a task for our sample_user
-    sample_user.add_task('wash dog', 'chores')
-    sample_user.add_task('5km run', 'exercise')
-    # Print the string representation of our user:
-    # print(sample_user)
-    # Print a list of all the users
-    #print(f'All users: {ALL_USERNAMES}')
-    # Print the sample_user's first task and its category:
-    #first = sample_user.task_list[0]
-    #print(f'First task: {first.name}\nCategory: {first.category}')
-    # Print all of sample_user's tasks and their categories:
-    tasks = sample_user.task_list
-    for task in tasks:
-        print(f'{task.name} ({task.category})')
+    """ Boot up db """
+    initialise()
+    print('Welcome to Tasks.py, a local to-do list app!\n')
+
 
 
 if __name__ == "__main__":
     main()
+    
+    print_all_tasks()
+
+
+    # Close DB connection:
+    db.close()

@@ -10,10 +10,8 @@ A basic to-do list application built using Python that presents a list of to-do 
 
 A to-do list for my to-do list app (in order of priority):
 
-1. Draw database diagram for all tables (Users, Tasks, ...)
-
-2. Implement database diagrams in SQLite3
-3. Continue implementing functionalities outlined below...
+1. Implement functions: delete_task, delete_all_tasks, etc.
+2. Continue implementing functionalities outlined below...
 
 <br>
 
@@ -26,13 +24,7 @@ A to-do list for my to-do list app (in order of priority):
 ### 1.1. Users
 
 <br>
-Users have the following attributes:
 
-* username
-* password
-* a task list that stores all of the user's tasks (remaining or completed)
-
-<br>
 The user can perform the following actions: 
 
 * add a task
@@ -53,7 +45,6 @@ Tasks have the following attributes:
 
 * name
 * date added
-* user_id (who added the task)
 * completed flag (default = False)
 * if completed = True, a date completed
 * a category (one of the following):
@@ -130,7 +121,23 @@ First, I will implement this project as a CLI program with a single user. I will
 
 <br>
 
+### 3.2. Database outline
+
+
+<br>
+
+**Tasks** 
+
+| id  | name      | timestamp  |completed| date_completed | category    |
+| --- | --------- | ---------- | ------- | -------------- | ----------- |
+| 1   | wash dog  | 05/11/2021 | 0       | NULL           | chores      |
+| 2   | 5km run   | 05/11/2021 | 0       | NULL           | exercise    |
+| 3   | design db | 05/11/2021 | 1       | 05/11/2021     | programming |
+| ... | ...       | ...        | ...     | ...            | ...         |
+
+<br>
+
 ----------------------
 
 <div style="text-align: right"><sub>This document is updated periodically. 
-Last update: 04/11/2021 8:16PM AEDT.</sub></div>
+Last update: 06/11/2021 4:09PM AEDT.</sub></div>
